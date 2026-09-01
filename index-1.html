@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Árbol de Problemas — Zonas Verdes de Bogotá</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --savanna: #2f5233;
+    --savanna-light: #4a7c50;
+    --clay: #b0532c;
+    --clay-dark: #8a3f21;
+    --paper: #f2efe6;
+    --paper-warm: #eae4d3;
+    --ink: #1f2a1f;
+    --ink-soft: #4d564d;
+    --mist: #d8dccb;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    padding:0 0 80px;
+  }
+
+  .header{
+    padding:56px 24px 40px;
+    text-align:center;
+    background:
+      radial-gradient(ellipse at top, rgba(74,124,80,0.15), transparent 60%),
+      var(--paper);
+    border-bottom:1px solid var(--mist);
+  }
+
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--clay-dark);
+    font-weight:600;
+    margin-bottom:14px;
+  }
+
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(28px,6vw,44px);
+    line-height:1.1;
+    margin:0 0 12px;
+    color:var(--savanna);
+  }
+
+  .subtitle{
+    color:var(--ink-soft);
+    font-size:15px;
+    max-width:480px;
+    margin:0 auto;
+    line-height:1.5;
+  }
+
+  .tree{
+    max-width:720px;
+    margin:0 auto;
+    padding:40px 20px 0;
+    position:relative;
+  }
+
+  .section-label{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:0 0 20px;
+  }
+
+  .section-label .tag{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:6px 14px;
+    border-radius:100px;
+    white-space:nowrap;
+  }
+
+  .tag.efectos{ background:var(--savanna); color:var(--paper);}
+  .tag.causas{ background:var(--clay); color:var(--paper);}
+
+  .section-label .line{
+    flex:1;
+    height:1px;
+    background:var(--mist);
+  }
+
+  .cards{
+    display:grid;
+    gap:12px;
+    margin-bottom:8px;
+  }
+
+  .cards.two-col{
+    grid-template-columns:1fr;
+  }
+  @media(min-width:520px){
+    .cards.two-col{grid-template-columns:1fr 1fr;}
+  }
+
+  .card{
+    background:#fff;
+    border:1px solid var(--mist);
+    border-left:4px solid var(--savanna-light);
+    border-radius:6px;
+    padding:14px 16px;
+    font-size:14.5px;
+    line-height:1.45;
+    color:var(--ink);
+  }
+
+  .cards.causas .card{ border-left-color:var(--clay);}
+
+  .card .kicker{
+    display:block;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:4px;
+    font-weight:600;
+  }
+
+  .connector{
+    display:flex;
+    justify-content:center;
+    padding:10px 0;
+  }
+  .connector svg{ opacity:0.55; }
+
+  .trunk{
+    background:var(--savanna);
+    color:var(--paper);
+    border-radius:10px;
+    padding:26px 24px;
+    text-align:center;
+    position:relative;
+    margin:8px 0;
+    box-shadow:0 8px 24px -8px rgba(47,82,51,0.4);
+  }
+
+  .trunk::before{
+    content:'';
+    position:absolute;
+    top:-10px; left:50%;
+    transform:translateX(-50%);
+    width:0; height:0;
+    border-left:10px solid transparent;
+    border-right:10px solid transparent;
+    border-bottom:10px solid var(--savanna);
+  }
+
+  .trunk .kicker{
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--mist);
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+  }
+
+  .trunk h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(19px,4.2vw,25px);
+    margin:0;
+    line-height:1.25;
+  }
+
+  .divider-space{ height:36px; }
+
+  .footer-note{
+    max-width:720px;
+    margin:48px auto 0;
+    padding:0 24px;
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    border-top:1px solid var(--mist);
+    padding-top:20px;
+  }
+
+  .legend{
+    display:flex;
+    gap:18px;
+    justify-content:center;
+    margin-top:14px;
+    flex-wrap:wrap;
+  }
+  .legend span{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .dot{
+    width:9px;height:9px;border-radius:2px;
+  }
+  .dot.s{background:var(--savanna-light);}
+  .dot.c{background:var(--clay);}
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="eyebrow">Diagnóstico ambiental urbano</div>
+    <h1>Pérdida de zonas verdes<br>en Bogotá</h1>
+    <p class="subtitle">Árbol de problemas: causas en la raíz, el problema central en el tronco, efectos en la copa.</p>
+    <div class="legend">
+      <span><span class="dot s"></span> Efectos (copa)</span>
+      <span><span class="dot c"></span> Causas (raíces)</span>
+    </div>
+  </div>
+
+  <div class="tree">
+
+    <!-- EFECTOS INDIRECTOS -->
+    <div class="section-label">
+      <span class="tag efectos">Efectos indirectos</span>
+      <span class="line"></span>
+    </div>
+    <div class="cards two-col">
+      <div class="card"><span class="kicker">Aire</span>Deterioro de la calidad del aire por menor absorción de CO₂</div>
+      <div class="card"><span class="kicker">Riesgo</span>Mayor vulnerabilidad a inundaciones por pérdida de suelos de infiltración</div>
+      <div class="card"><span class="kicker">Salud</span>Impactos negativos en la salud física y mental de los habitantes</div>
+      <div class="card"><span class="kicker">Equidad</span>Pérdida de calidad de vida y aumento de la desigualdad ambiental entre localidades</div>
+    </div>
+
+    <div class="connector">
+      <svg width="24" height="28" viewBox="0 0 24 28"><path d="M12 28V2M12 2L4 10M12 2l8 8" stroke="#2f5233" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- EFECTOS DIRECTOS -->
+    <div class="section-label">
+      <span class="tag efectos">Efectos directos</span>
+      <span class="line"></span>
+    </div>
+    <div class="cards two-col">
+      <div class="card">Reducción de la biodiversidad urbana (fauna y flora nativa)</div>
+      <div class="card">Aumento de islas de calor en la ciudad</div>
+      <div class="card">Disminución de espacios públicos para recreación</div>
+    </div>
+
+    <div class="connector">
+      <svg width="24" height="28" viewBox="0 0 24 28"><path d="M12 28V2M12 2L4 10M12 2l8 8" stroke="#2f5233" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- TRONCO / PROBLEMA CENTRAL -->
+    <div class="trunk">
+      <span class="kicker">Problema central</span>
+      <h2>Pérdida progresiva de zonas verdes en Bogotá</h2>
+    </div>
+
+    <div class="connector">
+      <svg width="24" height="28" viewBox="0 0 24 28"><path d="M12 0v26M12 26l-8-8M12 26l8-8" stroke="#b0532c" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- CAUSAS DIRECTAS -->
+    <div class="section-label">
+      <span class="tag causas">Causas directas</span>
+      <span class="line"></span>
+    </div>
+    <div class="cards causas two-col">
+      <div class="card">Expansión urbana descontrolada sobre suelos de protección</div>
+      <div class="card">Débil aplicación y control del Plan de Ordenamiento Territorial (POT)</div>
+      <div class="card">Insuficiente inversión pública en parques y corredores ecológicos</div>
+    </div>
+
+    <div class="connector">
+      <svg width="24" height="28" viewBox="0 0 24 28"><path d="M12 0v26M12 26l-8-8M12 26l8-8" stroke="#b0532c" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <!-- CAUSAS INDIRECTAS -->
+    <div class="section-label">
+      <span class="tag causas">Causas indirectas</span>
+      <span class="line"></span>
+    </div>
+    <div class="cards causas two-col">
+      <div class="card"><span class="kicker">Demografía</span>Crecimiento poblacional y alta demanda de vivienda</div>
+      <div class="card"><span class="kicker">Economía</span>Presión de intereses económicos (constructoras, especulación del suelo)</div>
+      <div class="card"><span class="kicker">Gobernanza</span>Corrupción o vacíos en licencias urbanísticas</div>
+      <div class="card"><span class="kicker">Cultura</span>Baja conciencia ambiental ciudadana</div>
+      <div class="card"><span class="kicker">Institucional</span>Falta de articulación entre entidades distritales (Ambiente, Planeación, Alcaldías locales)</div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    Estructura basada en la metodología de árbol de problemas: las raíces representan las causas (directas e indirectas), el tronco el problema central, y la copa los efectos derivados de dicho problema.
+  </div>
+
+</body>
+</html>
